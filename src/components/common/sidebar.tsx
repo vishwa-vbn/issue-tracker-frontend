@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   CheckSquare,
@@ -16,14 +16,34 @@ interface SidebarProps {
 }
 
 export function Sidebar({ onNavClick, className }: SidebarProps) {
+  const location = useLocation();
+  const pathname = location.pathname;
   const user = useAppSelector((s) => s.auth.user);
   const isAdmin = user?.role === 'ADMIN';
 
   const navItems = [
-    { to: ROUTES.DASHBOARD, label: 'Dashboard', icon: LayoutDashboard },
-    { to: ROUTES.ISSUES, label: 'Issues', icon: CheckSquare },
-    { to: ROUTES.ISSUE_NEW, label: 'New Issue', icon: PlusCircle },
+    {
+      to: ROUTES.DASHBOARD,
+      label: 'Dashboard',
+      icon: LayoutDashboard,
+      isActive: pathname === ROUTES.DASHBOARD,
+    },
+    {
+      to: ROUTES.ISSUES,
+      label: 'Issues',
+      icon: CheckSquare,
+      // Active for /issues or issue details/edit, but NOT for /issues/new
+      isActive: (pathname === ROUTES.ISSUES || pathname.startsWith('/issues/')) && pathname !== ROUTES.ISSUE_NEW,
+    },
+    {
+      to: ROUTES.ISSUE_NEW,
+      label: 'New Issue',
+      icon: PlusCircle,
+      isActive: pathname === ROUTES.ISSUE_NEW,
+    },
   ];
+
+  const isAdminUsersActive = pathname.startsWith(ROUTES.ADMIN_USERS);
 
   return (
     <div className={cn('flex flex-col h-full w-full bg-card border-r border-border overflow-hidden select-none', className)}>
@@ -56,14 +76,12 @@ export function Sidebar({ onNavClick, className }: SidebarProps) {
                   key={item.to}
                   to={item.to}
                   onClick={onNavClick}
-                  className={({ isActive }) =>
-                    cn(
-                      'flex items-center gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150',
-                      isActive
-                        ? 'bg-primary/10 text-primary font-semibold border border-primary/20 shadow-none'
-                        : 'text-muted-foreground hover:bg-slate-100 hover:text-foreground',
-                    )
-                  }
+                  className={cn(
+                    'flex items-center gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150',
+                    item.isActive
+                      ? 'bg-primary/10 text-primary font-semibold border border-primary/20 shadow-none'
+                      : 'text-muted-foreground hover:bg-slate-100 hover:text-foreground',
+                  )}
                 >
                   <Icon className="size-4 shrink-0" />
                   <span>{item.label}</span>
@@ -82,14 +100,12 @@ export function Sidebar({ onNavClick, className }: SidebarProps) {
               <NavLink
                 to={ROUTES.ADMIN_USERS}
                 onClick={onNavClick}
-                className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150',
-                    isActive
-                      ? 'bg-primary/10 text-primary font-semibold border border-primary/20'
-                      : 'text-muted-foreground hover:bg-slate-100 hover:text-foreground',
-                  )
-                }
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150',
+                  isAdminUsersActive
+                    ? 'bg-primary/10 text-primary font-semibold border border-primary/20'
+                    : 'text-muted-foreground hover:bg-slate-100 hover:text-foreground',
+                )}
               >
                 <Users className="size-4 shrink-0" />
                 <span>Manage Users</span>

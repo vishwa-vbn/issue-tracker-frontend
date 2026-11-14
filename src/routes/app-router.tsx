@@ -16,7 +16,6 @@ const IssueNewPage = lazy(() => import('@/pages/issues/issue-new-page'));
 const IssueDetailPage = lazy(() => import('@/pages/issues/issue-detail-page'));
 const IssueEditPage = lazy(() => import('@/pages/issues/issue-edit-page'));
 const AdminUsersPage = lazy(() => import('@/pages/admin/admin-users-page'));
-const ComponentViewerPage = lazy(() => import('@/pages/system/component-viewer-page'));
 
 const router = createBrowserRouter([
   // Guest Routes (redirect if already logged in)
@@ -51,9 +50,6 @@ const router = createBrowserRouter([
             element: <RequireAdmin />,
             children: [{ path: '/admin/users', element: <AdminUsersPage /> }],
           },
-
-          // Dev Component Viewer
-          { path: '/component-viewer', element: <ComponentViewerPage /> },
         ],
       },
     ],

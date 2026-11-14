@@ -45,7 +45,6 @@ export const ROUTES = {
   ISSUE_DETAIL: (id: string) => `/issues/${id}`,
   ISSUE_EDIT: (id: string) => `/issues/${id}/edit`,
   ADMIN_USERS: '/admin/users',
-  COMPONENT_VIEWER: '/component-viewer',
 } as const;
 
 export const DEFAULT_PAGE_SIZE = 10;

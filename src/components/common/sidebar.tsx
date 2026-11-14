@@ -4,7 +4,6 @@ import {
   CheckSquare,
   PlusCircle,
   Users,
-  Code2,
   Bug,
 } from 'lucide-react';
 import { useAppSelector } from '@/store';
@@ -19,7 +18,6 @@ interface SidebarProps {
 export function Sidebar({ onNavClick, className }: SidebarProps) {
   const user = useAppSelector((s) => s.auth.user);
   const isAdmin = user?.role === 'ADMIN';
-  const showComponentViewer = import.meta.env.VITE_ENABLE_COMPONENT_VIEWER === 'true';
 
   const navItems = [
     { to: ROUTES.DASHBOARD, label: 'Dashboard', icon: LayoutDashboard },
@@ -95,31 +93,6 @@ export function Sidebar({ onNavClick, className }: SidebarProps) {
               >
                 <Users className="size-4 shrink-0" />
                 <span>Manage Users</span>
-              </NavLink>
-            </nav>
-          </div>
-        )}
-
-        {showComponentViewer && (
-          <div>
-            <p className="px-3 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70 mb-2">
-              Development
-            </p>
-            <nav className="space-y-0.5">
-              <NavLink
-                to={ROUTES.COMPONENT_VIEWER}
-                onClick={onNavClick}
-                className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150',
-                    isActive
-                      ? 'bg-primary/10 text-primary font-semibold border border-primary/20'
-                      : 'text-muted-foreground hover:bg-slate-100 hover:text-foreground',
-                  )
-                }
-              >
-                <Code2 className="size-4 shrink-0" />
-                <span>Component Viewer</span>
               </NavLink>
             </nav>
           </div>

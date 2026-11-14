@@ -4,9 +4,10 @@ Responsive web application for the Issue Tracker System. Team members register a
 
 | | |
 | --- | --- |
-| **Live app** | `https://<frontend>.vercel.app` *(replace after deploy)* |
-| **Live API** | `https://<backend>.onrender.com/api/v1` *(replace after deploy)* |
-| **Backend repo** | `https://github.com/<you>/issue-tracker-backend` |
+| **Live app** | `https://issue-tracker-frontend-psi.vercel.app` |
+| **Live API** | `https://issue-tracker-backend-three.vercel.app/api/v1` |
+| **Backend repo** | `https://github.com/vishwa-vbn/issue-tracker-backend` |
+| **Frontend repo** | `https://github.com/vishwa-vbn/issue-tracker-frontend` |
 
 > **Heads-up for reviewers:** the API runs on a free instance that sleeps when idle. If the first request takes up to a minute, the server is waking up; the app shows a banner while it waits.
 
@@ -55,7 +56,6 @@ Responsive web application for the Issue Tracker System. Team members register a
 | Edit issue | `/issues/:issueId/edit` | Reporter or admin |
 | Users | `/admin/users` | Admin |
 | 404 / 403 | `*` | Everyone |
-| Component viewer | `/component-viewer` | Dev only (`VITE_ENABLE_COMPONENT_VIEWER=true`) |
 
 *(Add screenshots to `docs/screenshots/` and link them here after Phase 6.)*
 
@@ -195,8 +195,8 @@ Vitest + React Testing Library with MSW mocking the API: login/register validati
 | --- | --- |
 | Host | Vercel (Hobby, free) |
 | Build | `npm run build` → `dist/` (Vite preset) |
-| Env | `VITE_API_BASE_URL=/api/v1`, `VITE_ENABLE_COMPONENT_VIEWER=false` |
-| Routing | `vercel.json` rewrites `/api/*` to the Render backend and everything else to `index.html` |
+| Env | `VITE_API_BASE_URL=/api/v1` |
+| Routing | `vercel.json` rewrites `/api/*` to the live backend API and everything else to `index.html` |
 
 **Deploy:** push to GitHub → import the repo in Vercel → set env vars → deploy. **Update:** merge to `main` (auto-deploy; PRs get preview URLs). **Rollback:** promote a previous deployment in the Vercel dashboard.
 
